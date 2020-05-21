@@ -61,6 +61,8 @@ local function RefillStamina()
 		wait(3)
 	else
 		scriptExit("AP ran out!")
+		click(game.STAMINA_CLOSE_CLICK)
+		wait(60)
 	end
 end
 

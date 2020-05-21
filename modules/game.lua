@@ -30,6 +30,7 @@ game.STAMINA_SQ_CLICK = Location(1270,345)
 game.STAMINA_GOLD_CLICK = Location(1270,634)
 game.STAMINA_SILVER_CLICK = Location(1270,922)
 game.STAMINA_BRONZE_CLICK = Location(1270,1140)
+game.STAMINA_CLOSE_CLICK = Location(1270,1220)
 
 game.SUPPORT_SCREEN_REGION = Region(0,0,200,400)
 game.SUPPORT_LIST_REGION = Region(70,332,378,1091) -- see docs/media/support_list_region.png
