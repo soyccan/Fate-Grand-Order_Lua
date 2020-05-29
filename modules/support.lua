@@ -1,3 +1,5 @@
+require "common"
+
 -- modules
 local game = require("game")
 local stringUtils = require("string-utils")
@@ -75,6 +77,7 @@ init = function()
 end
 
 selectSupport = function(selectionMode)
+    print('select support')
 	while not game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png") do end
 		if selectionMode == "first" then
 			return selectFirst()
@@ -97,22 +100,28 @@ selectSupport = function(selectionMode)
 end
 
 selectFirst = function()
+    print('select first')
 	wait(1)
 	click(game.SUPPORT_FIRST_SUPPORT_CLICK)
+    wait(2)
+
 	--https://github.com/29988122/Fate-Grand-Order_Lua/issues/192 , band-aid fix but it's working well. 
-	if game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png") then
-		wait(2)
-		while game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png")
-		do
-			wait(10)
-			click(game.SUPPORT_UPDATE_CLICK)
-			wait(1)
-			click(game.SUPPORT_UPDATE_YES_CLICK)
-			wait(3)
-			click(game.SUPPORT_FIRST_SUPPORT_CLICK)
-			wait(1)
-		end
-	end
+    -- Add: the solution is SO UGLY AND DO NOT WORK
+    -- so I made some changes
+    usePreviousSnap(false)
+    snapshot()
+    while game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png")
+    do
+        click(game.SUPPORT_UPDATE_CLICK)
+        wait(1)
+        click(game.SUPPORT_UPDATE_YES_CLICK)
+        wait(3)
+        click(game.SUPPORT_FIRST_SUPPORT_CLICK)
+        wait(1)
+
+        usePreviousSnap(false)
+        snapshot()
+    end
 	return true
 end
 
@@ -129,6 +138,7 @@ selectFriend = function()
 end
 
 selectPreferred = function(searchMethod)
+    print('select preferred')
 	local numberOfSwipes = 0
 	local numberOfUpdates = 0
 
@@ -182,12 +192,14 @@ scrollList = function()
 end
 
 searchVisible = function(searchMethod)
+    print('serach visible')
 	local function performSearch()
 		if not isFriend(game.SUPPORT_FRIEND_REGION) then
 			return {"no-friends-at-all"} -- no friends on screen, so there's no point in scrolling anymore
 		end
 
-		local support, bounds = searchMethod()
+		local support = searchMethod()
+        print('search visible support=',support)
 		if support == nil then
 			return {"not-found"} -- nope, not found this time. keep scrolling
 		end
@@ -264,12 +276,19 @@ findFriendName = function()
 end
 
 findServants = function()
+    print('find servant')
 	local servants = {}
 
 	for _, preferredServant in ipairs(PreferredServantArray) do
-		for _, servant in ipairs(regionFindAllNoFindException(game.SUPPORT_LIST_REGION, Pattern(SupportImagePath .. preferredServant))) do
-			table.insert(servants, servant)
-		end
+        -- TODO: multiple servant
+        -- why below not working
+        -- ipairs() or pairs() ?
+        for _, servant in ipairs(regionFindAllNoFindException(
+                game.SUPPORT_LIST_REGION,
+                Pattern(SupportImagePath .. preferredServant))) do
+            print('find servant ', servant:getX(), servant:getY())
+            table.insert(servants, servant)
+        end
 	end
 
 	return servants

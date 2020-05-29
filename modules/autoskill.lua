@@ -30,8 +30,9 @@ end
 local function WaitForAnimationToFinish(timeout)
 	local image = GeneralImagePath .. "battle.png"
 
-	game.BATTLE_SCREEN_REGION:waitVanish(image, 2) -- slow devices need this. do not remove.
-	game.BATTLE_SCREEN_REGION:exists(image, timeout or 5)
+	-- game.BATTLE_SCREEN_REGION:waitVanish(image, 2) -- slow devices need this. do not remove.
+	-- game.BATTLE_SCREEN_REGION:exists(image, timeout or 5)
+    game.BATTLE_SCREEN_REGION:exists(image)
 end
 
 local function CastSkill(location)
@@ -259,6 +260,7 @@ local function ExecuteCommandList(commandList)
 end
 
 function autoskill.Execute()
+    print('autoskill exe')
 	local currentStage = battle.getCurrentStage()
 	local currentTurn = battle.getCurrentTurn()
 	local commandList = GetCommandListFor(currentStage, currentTurn)

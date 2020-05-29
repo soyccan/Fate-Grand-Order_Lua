@@ -77,6 +77,7 @@ isIdle = function()
 end
 
 getCurrentStage = function()
+    print('get current stage', _currentStage)
 	return _currentStage
 end
 
@@ -112,9 +113,9 @@ performBattle = function()
 	_card.resetCommandCards()
 	
 	if NPsClicked then
-		wait(25)
-	else
 		wait(5)
+	else
+		wait(2)
 	end
 end
 

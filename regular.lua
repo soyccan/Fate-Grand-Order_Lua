@@ -88,6 +88,7 @@ end
 
 --Click begin quest in Formation selection, then select boost item, if applicable, then confirm selection.
 local function StartQuest()
+    print("Start quest")
 	click(game.MENU_START_QUEST_CLICK)
 
 	if game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode] ~= nil then
@@ -138,7 +139,7 @@ end
 --Click through reward screen, continue if option presents itself, otherwise continue clicking through
 local function Result()
 	--Validator document https://github.com/29988122/Fate-Grand-Order_Lua/wiki/In-Game-Result-Screen-Flow for detail.
-	continueClick(game.RESULT_NEXT_CLICK,55)
+	continueClick(game.RESULT_NEXT_CLICK,20)
 
 	--Checking if there was a Bond CE reward
 	if game.RESULT_CE_REWARD_REGION:exists(GeneralImagePath .. "ce_reward.png") ~= nil then
@@ -213,6 +214,7 @@ end
 
 --Selections Support option, code located in modules/support.lua
 local function Support()
+    print('support')
 	--Friend selection.
 	local hasSelectedSupport = support.selectSupport(Support_SelectionMode)
 	if hasSelectedSupport == true then
@@ -280,5 +282,6 @@ while(true) do
 		actor()
 	end
 
-	wait(1)
+    click(game.NOTHING)
+	wait(0.5)
 end

@@ -175,6 +175,8 @@ game.RESULT_FRIEND_REQUEST_REJECT_CLICK = Location(600,1200)
 game.RESULT_QUEST_REWARD_REGION = Region(1630,140,370,250)
 game.RESULT_NEXT_CLICK = Location(2200,1350) -- see docs/media/quest_result_next_click.png
 
+game.NOTHING = Location(10,720)
+
 game.MatchClick = nil
 
 game.NeedsToRetry = function()

@@ -31,10 +31,10 @@ Refill_Repetitions = 3
 
 --自動選擇好友從者
 -- first,manual/friend/preferred
-Support_SelectionMode = "first"
+Support_SelectionMode = "preferred"
 Support_SwipesPerUpdate = 10
 Support_MaxUpdates = 3
-Support_FallbackTo = "manual"
+Support_FallbackTo = "first"
 Support_FriendsOnly = 0
 Support_FriendNames = ""
 Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png"
@@ -64,37 +64,44 @@ Skill_Confirmation = 0
 Skill_Command = ""
 
 --自動技能列表
-Enable_Autoskill_List = 0
+Enable_Autoskill_List = 1
 
-Autoskill_List[1][1] = "Daily Routine"
-Autoskill_List[1][2] = "c,#,ag2hi,#,b"
+Autoskill_List =
+{
+	{
+		Name = "Daily Routine",
+		Skill_Command = "c,#,ag2hi,#,b",
+		Support_SelectionMode = "preferred",
+        Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png",
+        Support_PreferredCEs = "",
+	},
+    {
+        Name = "Swim Event",
+        Skill_Command = "0,#,dk2,#,gi",
+		Support_SelectionMode = "preferred",
+		Support_PreferredServants = "swimsaber1.png",
+        Support_PreferredCEs = "",
+    },
+	{
+		Name = "Dust",
+		Skill_Command = "cdg5,#,e5,#,abi1k14",
+		Support_SelectionMode = "preferred",
+		Support_PreferredServants = "merlin1.png, merlin23.png, merlin4.png, merlin_c.png"
+	},
+	{
+		Name = "Gear",
+		Skill_Command = "6,#,h6,#,bx31fed1gj46",
+		Support_SelectionMode = "preferred"
+	}
+}
 
-Autoskill_List[2][1] = "Swim Event"
-Autoskill_List[2][2] = ",#,dk2,#,gi"
+-- apply autoskill list
+local ch = 2
+Skill_Command = Autoskill_List[ch].Skill_Command
+Support_SelectionMode = Autoskill_List[ch].Support_SelectionMode
+Support_PreferredServants = Autoskill_List[ch].Support_PreferredServants
+Support_PreferredCEs = Autoskill_List[ch].Support_PreferredCEs
 
-Autoskill_List[3][1] = "Settings No.3"
-Autoskill_List[3][2] = ""
-
-Autoskill_List[4][1] = "Settings No.4"
-Autoskill_List[4][2] = ""
-
-Autoskill_List[5][1] = "Settings No.5"
-Autoskill_List[5][2] = ""
-
-Autoskill_List[6][1] = "Settings No.6"
-Autoskill_List[6][2] = ""
-
-Autoskill_List[7][1] = "Settings No.7"
-Autoskill_List[7][2] = ""
-
-Autoskill_List[8][1] = "Settings No.8"
-Autoskill_List[8][2] = ""
-
-Autoskill_List[9][1] = "Settings No.9"
-Autoskill_List[9][2] = ""
-
-Autoskill_List[10][1] = "Settings No.10"
-Autoskill_List[10][2] = ""
 
 --自訂卡片選擇優先順序
 Battle_CardPriority = "BAQ"
@@ -104,5 +111,7 @@ Battle_AutoChooseTarget = 1
 Battle_NoblePhantasm = "spam"
 --快速跳過死亡動畫
 UnstableFastSkipDeadAnimation = 0
+
+Withdraw_Enabled = 1
 
 dofile(dir .. "regular.lua")
