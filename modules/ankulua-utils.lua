@@ -1,3 +1,5 @@
+require("global")
+
 local ankuluaUtils = {}
 
 -- determines if a match is completely contained in a region

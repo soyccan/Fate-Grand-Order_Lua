@@ -1,6 +1,10 @@
 --內部設定，請勿更動
 --***************************************************************************
-dir = scriptPath()
+require("global")
+
+-- dir = scriptPath()
+-- dir = 'C:/Users/soyccan/Documents/Fate-Grand-Order_Lua/'
+dir = '/mnt/hgfs/Documents/Fate-Grand-Order_Lua/'
 setImagePath(dir)
 GameRegion = "TW" --StageCountRegion issue comment https://github.com/29988122/Fate-Grand-Order_Lua/issues/39#issuecomment-390208639
 StageCountRegion = Region(1710,25,55,60)
@@ -26,7 +30,8 @@ Refill_Resource = "All Apples"
 Refill_Repetitions = 3
 
 --自動選擇好友從者
-Support_SelectionMode = "preferred"
+-- first,manual/friend/preferred
+Support_SelectionMode = "first"
 Support_SwipesPerUpdate = 10
 Support_MaxUpdates = 3
 Support_FallbackTo = "manual"
@@ -49,23 +54,23 @@ BoostItem_SelectionMode = "disabled" --[[
 	TODO: move this explanation to the documentation
 --]]
 
-StorySkip = 0 --[[
+StorySkip = 1 --[[
 	People really want this feature.
 ]]
 
 --自動施放技能
 Enable_Autoskill = 1
 Skill_Confirmation = 0
-Skill_Command = "c,#,ag2hi,#,b"
+Skill_Command = ""
 
 --自動技能列表
 Enable_Autoskill_List = 0
 
-Autoskill_List[1][1] = "Settings No.1"
-Autoskill_List[1][2] = "abc,#,def,#,ghi"
+Autoskill_List[1][1] = "Daily Routine"
+Autoskill_List[1][2] = "c,#,ag2hi,#,b"
 
-Autoskill_List[2][1] = "Settings No.2"
-Autoskill_List[2][2] = ""
+Autoskill_List[2][1] = "Swim Event"
+Autoskill_List[2][2] = ",#,dk2,#,gi"
 
 Autoskill_List[3][1] = "Settings No.3"
 Autoskill_List[3][2] = ""

@@ -1,3 +1,5 @@
+require("global")
+
 local game = {}
 
 game.MENU_SCREEN_REGION = Region(2100,1200,1000,1000)
@@ -81,13 +83,13 @@ game.BATTLE_SKIP_DEATH_ANIMATION_CLICK = Location(1700, 100) -- see docs/media/s
 
 -- see docs/media/target_regions.png
 game.BATTLE_TARGET_REGION_ARRAY = {
-	Region(0,0,485,220),
+    Region(0,0,485,220),
 	Region(485,0,482,220),
 	Region(967,0,476,220)
 }
 
 game.BATTLE_TARGET_CLICK_ARRAY = {
-	Location(90,80),
+    Location(90,80),
 	Location(570,80),
 	Location(1050,80)
 }
@@ -139,7 +141,7 @@ game.BATTLE_CARD_TYPE_REGION_ARRAY = {
 }
 
 game.BATTLE_COMMAND_CARD_CLICK_ARRAY = {
-	Location(300,1000),
+    Location(300,1000),
 	Location(750,1000),
 	Location(1300,1000),
 	Location(1800,1000),
@@ -147,13 +149,13 @@ game.BATTLE_COMMAND_CARD_CLICK_ARRAY = {
 }
 
 game.BATTLE_NP_CARD_CLICK_ARRAY = {
-	Location(1000,220),
+    Location(1000,220),
 	Location(1300,400),
 	Location(1740,400)
 }
 
 game.BATTLE_SERVANT_FACE_REGION_ARRAY = {
-	Region(106 ,800,300,200),
+    Region(106 ,800,300,200),
 	Region(620 ,800,300,200),
 	Region(1130,800,300,200),
 	Region(1644,800,300,200),

@@ -1,3 +1,5 @@
+require("global")
+
 local scaling = {}
 
 local ankuluaUtils = require("ankulua-utils")

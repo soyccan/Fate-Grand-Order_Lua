@@ -2,12 +2,14 @@
 	私の国では仕事時間は異常に長いので、もう満足プレイする時間すらできない。休日を使ってシナリオを読むことがもう精一杯…
 	お願いします。このプログラムを禁止しないでください。
 --]]
+require("global")
+
 package.path = package.path .. ";" .. dir .. 'modules/?.lua'
 
 -- consts
 GeneralImagePath = "image_" .. GameRegion .. "/"
-local IMAGE_WIDTH = 1280
-local IMAGE_HEIGHT = 720
+local IMAGE_WIDTH = 1920
+local IMAGE_HEIGHT = 1080
 local SCRIPT_WIDTH = 2560
 local SCRIPT_HEIGHT = 1440
 
