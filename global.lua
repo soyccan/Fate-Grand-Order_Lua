@@ -34,6 +34,22 @@ function toast(s)
     print(s)
 end
 
+function scriptExit(msg)
+    print(msg)
+    os.exit(0)
+end
+
+function clickNoScale(PSMRL)
+    -- TODO: find all that need to use clickNoScale instead of click()
+    assert(PSMRL.type == "Match" or PSMRL.type == 'Location')
+
+    local cmdTap = string.format('adb shell input tap %d %d',
+        PSMRL.getX(),
+        PSMRL.getY())
+    print('> ' .. cmdTap)
+    os.execute(cmdTap)
+end
+
 -- PSMRL: Pattern/string/Match/Region/Location
 function click(PSMRL)
     assert(PSMRL.type == "Match" or PSMRL.type == 'Location')

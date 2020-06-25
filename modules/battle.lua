@@ -204,7 +204,7 @@ end
 
 clickAttack = function()
 	click(_game.BATTLE_ATTACK_CLICK)
-	wait(1.5) -- Although it seems slow, make it no shorter than 1 sec to protect user with less processing power devices.
+	wait(.5) -- Although it seems slow, make it no shorter than 1 sec to protect user with less processing power devices.
 
 	onAttackClicked()
 	_card.readCommandCards()

@@ -21,7 +21,6 @@ function Region(x, y, w, h)
         if type(PS) ~= "string" then
             PS = PS:getFilename()
         end
-        print("_has " .. PS)
 
         snapshot()
 
@@ -29,12 +28,17 @@ function Region(x, y, w, h)
         local img = cv.imread("sh.png", 0)
         local tmpl = cv.imread(PS, 0)
 
+        local x,y = _scale(_x,_y)
+        local w,h = _scale(_w,_h)
+        print("_has " .. PS,x,y,w,h,'/',img.cols,img.rows)
+        local sub = cv.Mat.new(img, cv.Rect(x,y,w,h))
+
         -- Note following are equivalent in lua: 
         -- obj.method(obj, arg) and obj:method(arg)
         -- TODO: UMat faster?
-        local res = cv.Mat.zeros(img.rows - tmpl.rows + 1, 
-                                 img.cols - tmpl.cols + 1, img:type())
-        cv.matchTemplate(img, tmpl, res, cv.TM_CCOEFF_NORMED)
+        local res = cv.Mat.zeros(sub.rows - tmpl.rows + 1, 
+                                 sub.cols - tmpl.cols + 1, sub:type())
+        cv.matchTemplate(sub, tmpl, res, cv.TM_CCOEFF_NORMED)
 
         local maxval = res:max()
         -- TODO: maxx is a mistype of maxrow, fix that in library
@@ -46,6 +50,13 @@ function Region(x, y, w, h)
             return Match(maxx,maxy, 10, 10)
         end
         print(PS .. ' not found')
+        
+        -- manually free matrix's memory
+        img:release()
+        tmpl:release()
+        res:release()
+        sub:release()
+
         return nil
     end
 
@@ -84,6 +95,7 @@ function Region(x, y, w, h)
             local w,h = _scale(_w,_h)
             local sub = cv.Mat.new(img, cv.Rect(x,y,w,h))
             cv.imwrite(path, sub)
+            sub:release()
         end,
     }
 end

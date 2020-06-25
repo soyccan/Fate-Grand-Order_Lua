@@ -25,7 +25,7 @@ end
 --腳本設定說明請參照： https://github.com/29988122/Fate-Grand-Order_Lua/wiki/Script-configuration-正體中文/
 --***************************************************************************
 --自動補體
-Refill_Enabled = 1
+Refill_Enabled = 0
 Refill_Resource = "All Apples"
 Refill_Repetitions = 3
 
@@ -76,12 +76,34 @@ Autoskill_List =
         Support_PreferredCEs = "",
 	},
     {
-        Name = "Swim Event",
-        Skill_Command = "0,#,dk2,#,gi",
-		Support_SelectionMode = "preferred",
-		Support_PreferredServants = "swimsaber1.png",
+        Name = "Random",
+        Skill_Command = "",
+		Support_SelectionMode = "first",
+		Support_PreferredServants = "",
         Support_PreferredCEs = "",
     },
+    {
+        Name = "Swim Event Honolulu Airport",
+        Skill_Command = "c,#,0,def,#,0,ghi",
+		Support_SelectionMode = "preferred",
+		Support_PreferredServants = "swimsaber1.png, nito.png",
+        Support_PreferredCEs = "",
+    },
+    {
+        Name = "Swim Event koko",
+        Skill_Command = "0,#,abcdf,#,jk2",
+		Support_SelectionMode = "first",
+		Support_PreferredServants = "laiguang.png, gil.png",
+        Support_PreferredCEs = "",
+    },
+    {
+        Name = "Foreigner",
+        Skill_Command = "acd1,#,e,#,ac",
+		Support_SelectionMode = "first",
+		Support_PreferredServants = "",
+        Support_PreferredCEs = "",
+    },
+
 	{
 		Name = "Dust",
 		Skill_Command = "cdg5,#,e5,#,abi1k14",
@@ -96,7 +118,8 @@ Autoskill_List =
 }
 
 -- apply autoskill list
-local ch = 2
+-- note index starts from 1
+local ch = 1
 Skill_Command = Autoskill_List[ch].Skill_Command
 Support_SelectionMode = Autoskill_List[ch].Support_SelectionMode
 Support_PreferredServants = Autoskill_List[ch].Support_PreferredServants

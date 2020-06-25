@@ -136,12 +136,12 @@ getCommandCards = function()
 	local storagePerScore = {
 		[CARD_SCORE.WEAK_BUSTER]   = storagePerPriority.WB,
 		[CARD_SCORE.BUSTER]        = storagePerPriority.B,
-		[CARD_SCORE.RESIST_BUSTER] = storagePerPriority.RB,
 		[CARD_SCORE.WEAK_ARTS]     = storagePerPriority.WA,
 		[CARD_SCORE.ARTS]          = storagePerPriority.A,
-		[CARD_SCORE.RESIST_ARTS]   = storagePerPriority.RA,
 		[CARD_SCORE.WEAK_QUICK]    = storagePerPriority.WQ,
 		[CARD_SCORE.QUICK]         = storagePerPriority.Q,
+		[CARD_SCORE.RESIST_BUSTER] = storagePerPriority.RB,
+		[CARD_SCORE.RESIST_ARTS]   = storagePerPriority.RA,
 		[CARD_SCORE.RESIST_QUICK]  = storagePerPriority.RQ
 	}
 
@@ -162,7 +162,7 @@ end
 
 clickCommandCards = function(clicks)
 	if chains then
-		
+        -- TODO
 		return
 	end
 
@@ -172,6 +172,8 @@ clickCommandCards = function(clicks)
 		local currentCardTypeStorage = _commandCards[cardPriority]
 	
 		for _, cardSlot in pairs(currentCardTypeStorage) do
+
+            print('pri ',cardPriority,'slot',cardSlot)
 			
 			if (clicks < i) then
 				cardsClickedSoFar = i - 1
@@ -179,7 +181,7 @@ clickCommandCards = function(clicks)
 			end
 			
 			if(i > cardsClickedSoFar) then
-				click(_game.BATTLE_COMMAND_CARD_CLICK_ARRAY[cardSlot])
+                click(_game.BATTLE_COMMAND_CARD_CLICK_ARRAY[cardSlot])
 			end
 			
 			i = i + 1
@@ -192,10 +194,14 @@ canClickNpCards = function()
 	local weCanSpam = Battle_NoblePhantasm == "spam"
 	local weAreInDanger = Battle_NoblePhantasm == "danger" and _battle.hasChosenTarget()
 
-	return (weCanSpam or weAreInDanger) and _autoskill.IsFinished()
+    -- TODO
+    -- click np card when stage >= 2
+    return _battle.getCurrentStage() >= 1 or _battle.hasChosenTarget()
+	-- return (weCanSpam or weAreInDanger) and _autoskill.IsFinished()
 end
 
 clickNpCards = function()
+    print('clickNpCards')
 	local NPsClicked = false
 	for _, npCard in pairs(_game.BATTLE_NP_CARD_CLICK_ARRAY) do
 		click(npCard)

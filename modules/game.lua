@@ -2,7 +2,7 @@ require("global")
 
 local game = {}
 
-game.MENU_SCREEN_REGION = Region(2100,1200,1000,1000)
+game.MENU_SCREEN_REGION = Region(2100,1200,460,240)
 game.CONTINUE_REGION = Region(1400,1000,600,200)
 game.MENU_SELECT_QUEST_CLICK = Location(2290,400)
 game.MENU_START_QUEST_CLICK = Location(2400,1350)
@@ -128,7 +128,7 @@ game.BATTLE_CARD_AFFINITY_REGION_ARRAY = {
 	Region(810,650,250,200),
 	Region(1321,650,250,200),
 	Region(1834,650,250,200),
-	Region(2348,650,250,200)
+	Region(2348,650,212,200)
 }
 
 game.BATTLE_CARD_TYPE_REGION_ARRAY = {
@@ -175,7 +175,9 @@ game.RESULT_FRIEND_REQUEST_REJECT_CLICK = Location(600,1200)
 game.RESULT_QUEST_REWARD_REGION = Region(1630,140,370,250)
 game.RESULT_NEXT_CLICK = Location(2200,1350) -- see docs/media/quest_result_next_click.png
 
-game.NOTHING = Location(10,720)
+game.NOTHING = Location(2,720)
+game.NEXT_STEP = Location(2340,1300)
+game.FULL_SCREEN = Region(0,0,2560,1440)
 
 game.MatchClick = nil
 

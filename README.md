@@ -1,4 +1,30 @@
 # Fate-Grand-Order_Lua
+This is a modified version to use adb instead of Ankula
+
+## Tutorial
+On host (where Android emulator runs):
+1. Start a Nox emulator
+2. Run `nox_adb.exe devices` to see on which port the emulator listens
+Assume it's 62025
+3. Run the following to make adb daemon accessible remotely
+```
+netsh interface portproxy add v4tov4 \
+        listenport=62025 listenaddress=0.0.0.0 \
+        connectport=62025 connectaddress=127.0.0.1
+```
+
+On remote (where this script runs):
+1. Connect to host: `adb connect 192.168.163.1:62025`
+2. Run the script: `lua FGO_TW_REGULAR.lua`
+
+To take screenshot:
+adb shell screencap -p /sdcard/sh.png
+adb pull /sdcard/sh.png
+
+## Troubleshooting
+- `adb kill-server`
+
+## Orignal Readme
 [![Lua-5.1-Sikuli](https://cdn.rawgit.com/29988122/Fate-Grand-Order_Lua/master/docs/media/Lua--Sikuli-5.1-blue.svg)](http://www.sikuli.org/)[![GitHub license](https://cdn.rawgit.com/29988122/Fate-Grand-Order_Lua/master/docs/media/Fate-Grand-Order_Lua.svg)](https://github.com/29988122/Fate-Grand-Order_Lua/blob/master/LICENSE)
 
 Screw those farming events - I only wanna enjoy the (kinoko) story!

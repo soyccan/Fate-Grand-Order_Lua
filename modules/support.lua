@@ -79,22 +79,22 @@ end
 selectSupport = function(selectionMode)
     print('select support')
 	while not game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png") do end
-		if selectionMode == "first" then
-			return selectFirst()
+    if selectionMode == "first" then
+        return selectFirst()
 
-		elseif selectionMode == "manual" then
-			selectManual()
-		
-		elseif selectionMode == "friend" then
-			return selectFriend()
+    elseif selectionMode == "manual" then
+        selectManual()
+    
+    elseif selectionMode == "friend" then
+        return selectFriend()
 
-		elseif selectionMode == "preferred" then
-			local searchMethod = decideSearchMethod()
-			return selectPreferred(searchMethod)
+    elseif selectionMode == "preferred" then
+        local searchMethod = decideSearchMethod()
+        return selectPreferred(searchMethod)
 
-		else
-			scriptExit("Invalid support selection mode: \"" + selectionMode + "\".")
-		end
+    else
+        scriptExit("Invalid support selection mode: \"" + selectionMode + "\".")
+    end
 
 	return false
 end
@@ -142,12 +142,13 @@ selectPreferred = function(searchMethod)
 	local numberOfSwipes = 0
 	local numberOfUpdates = 0
 
-	while (true)
-	do
+	while game.SUPPORT_SCREEN_REGION:exists(GeneralImagePath .. "support_screen.png") do
+        usePreviousSnap(false)
+
 		local result, support = searchVisible(searchMethod)
 
 		if result == "ok" then
-			click(support)
+			clickNoScale(support)
 			return true
 
 		elseif result == "not-found" and numberOfSwipes < Support_SwipesPerUpdate then
@@ -283,8 +284,9 @@ findServants = function()
         -- TODO: multiple servant
         -- why below not working
         -- ipairs() or pairs() ?
+        -- Note: must use FULL_SCREEN in region:find
         for _, servant in ipairs(regionFindAllNoFindException(
-                game.SUPPORT_LIST_REGION,
+                game.FULL_SCREEN,
                 Pattern(SupportImagePath .. preferredServant))) do
             print('find servant ', servant:getX(), servant:getY())
             table.insert(servants, servant)

@@ -2,7 +2,8 @@
 	私の国では仕事時間は異常に長いので、もう満足プレイする時間すらできない。休日を使ってシナリオを読むことがもう精一杯…
 	お願いします。このプログラムを禁止しないでください。
 --]]
-require("global")
+require "global"
+require "common"
 
 package.path = package.path .. ";" .. dir .. 'modules/?.lua'
 
@@ -62,20 +63,26 @@ local function RefillStamina()
 		end
 		wait(3)
 	else
-		scriptExit("AP ran out!")
+		toast("AP ran out!")
 		click(game.STAMINA_CLOSE_CLICK)
-		wait(60)
+		local wait_time = 60*5*40
+        while wait_time > 0 do
+            io.stdout:write('\rwaiting, remain: '..tostring(wait_time))
+            io.stdout:flush()
+            wait(1)
+            wait_time = wait_time - 1
+        end
 	end
 end
 
 local function NeedsToWithdraw()
-	MatchClick = game.WITHDRAW_REGION:exists(GeneralImagePath .. "withdraw.png")	-- MatchClick used to click on the found image
+	MatchClick = game.FULL_SCREEN:exists(GeneralImagePath .. "withdraw.png")	-- MatchClick used to click on the found image
 	return MatchClick
 end
 
 local function Withdraw()
 	if Withdraw_Enabled then
-		click(MatchClick)
+		clickNoScale(MatchClick)
 		MatchClick = nil		-- Return MatchClick to default state, to avoid any false positive clicking
 		wait(.5)
 		click(game.WITHDRAW_ACCEPT_CLICK)	-- Click the "Accept" button after choosing to withdraw
@@ -128,6 +135,9 @@ local function Menu()
 	--Auto refill.
 	while game.STAMINA_SCREEN_REGION:exists(GeneralImagePath .. "stamina.png") do
 		RefillStamina()
+
+        usePreviousSnap(false)
+        snapshot()
 	end
 end
 
@@ -139,7 +149,7 @@ end
 --Click through reward screen, continue if option presents itself, otherwise continue clicking through
 local function Result()
 	--Validator document https://github.com/29988122/Fate-Grand-Order_Lua/wiki/In-Game-Result-Screen-Flow for detail.
-	continueClick(game.RESULT_NEXT_CLICK,20)
+	continueClick(game.RESULT_NEXT_CLICK,10)
 
 	--Checking if there was a Bond CE reward
 	if game.RESULT_CE_REWARD_REGION:exists(GeneralImagePath .. "ce_reward.png") ~= nil then
@@ -149,7 +159,7 @@ local function Result()
 		end
 		
 		click(game.RESULT_CE_REWARD_CLOSE_CLICK)
-		continueClick(game.RESULT_NEXT_CLICK,35) --Still need to proceed through reward screen.
+		continueClick(game.RESULT_NEXT_CLICK,20) --Still need to proceed through reward screen.
 	end
 
 	wait(5)
@@ -269,6 +279,7 @@ while(Debug_Mode) do
 	game.RESULT_SCREEN_REGION:highlight(5)
 end
 --Loop through SCREENS until a Validator returns true/1
+local fail = 0
 while(true) do
 	local actor = ankuluaUtils.UseSameSnapIn(function()
 		for _, screen in pairs(SCREENS) do
@@ -280,8 +291,16 @@ while(true) do
 
 	if actor ~= nil then
 		actor()
+        fail = 0
+    else
+        fail = fail + 1
 	end
 
-    click(game.NOTHING)
+    -- prevent deadlock
+    if fail > 20 then
+        click(game.NEXT_STEP)
+        click(game.NOTHING)
+    end
+
 	wait(0.5)
 end
