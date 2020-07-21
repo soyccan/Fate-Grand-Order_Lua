@@ -4,7 +4,7 @@ require("global")
 
 -- dir = scriptPath()
 -- dir = 'C:/Users/soyccan/Documents/Fate-Grand-Order_Lua/'
-dir = '/mnt/hgfs/Documents/Fate-Grand-Order_Lua/'
+dir = '/home/soyccan/Documents/Fate-Grand-Order_Lua/'
 setImagePath(dir)
 GameRegion = "TW" --StageCountRegion issue comment https://github.com/29988122/Fate-Grand-Order_Lua/issues/39#issuecomment-390208639
 StageCountRegion = Region(1710,25,55,60)
@@ -25,9 +25,9 @@ end
 --腳本設定說明請參照： https://github.com/29988122/Fate-Grand-Order_Lua/wiki/Script-configuration-正體中文/
 --***************************************************************************
 --自動補體
-Refill_Enabled = 0
+Refill_Enabled = 1
 Refill_Resource = "All Apples"
-Refill_Repetitions = 3
+Refill_Repetitions = 0
 
 --自動選擇好友從者
 -- first,manual/friend/preferred
@@ -70,11 +70,25 @@ Autoskill_List =
 {
 	{
 		Name = "Daily Routine",
-		Skill_Command = "c,#,ag2hi,#,b",
+		Skill_Command = "c4,#,ag2hi,#,b",
 		Support_SelectionMode = "preferred",
         Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png",
         Support_PreferredCEs = "",
 	},
+    {
+        Name = "Gilbox Garden",
+        Skill_Command = "0,#,efl2a2g2,#,bhi2j,0,ek2",
+		Support_SelectionMode = "preferred",
+        Support_PreferredServants = "cba1.png",
+        Support_PreferredCEs = "",
+    },
+    {
+        Name = "Gilbox 1",
+        Skill_Command = "g1i4,#,hefx31g2,#,h",
+		Support_SelectionMode = "preferred",
+        Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png",
+        Support_PreferredCEs = "",
+    },
     {
         Name = "Random",
         Skill_Command = "",
@@ -124,6 +138,7 @@ Skill_Command = Autoskill_List[ch].Skill_Command
 Support_SelectionMode = Autoskill_List[ch].Support_SelectionMode
 Support_PreferredServants = Autoskill_List[ch].Support_PreferredServants
 Support_PreferredCEs = Autoskill_List[ch].Support_PreferredCEs
+print("Using " .. Autoskill_List[ch].Name)
 
 
 --自訂卡片選擇優先順序

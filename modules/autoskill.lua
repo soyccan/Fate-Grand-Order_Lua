@@ -32,7 +32,8 @@ local function WaitForAnimationToFinish(timeout)
 
     -- game.BATTLE_SCREEN_REGION:waitVanish(image, 2) -- slow devices need this. do not remove.
     -- game.BATTLE_SCREEN_REGION:exists(image, timeout or 5)
-    game.BATTLE_SCREEN_REGION:exists(image)
+    -- game.BATTLE_SCREEN_REGION:exists(image)
+    wait(6)
 end
 
 local function CastSkill(location)
@@ -43,15 +44,14 @@ local function CastSkill(location)
 			click(game.BATTLE_SKILL_OK_CLICK)
 		end
 
-		-- WaitForAnimationToFinish()
-        wait(4)
+        WaitForAnimationToFinish()
 	end
 end
 
 local function SelectSkillTarget(location)
 	return function()
 		click(location)
-		WaitForAnimationToFinish()
+        WaitForAnimationToFinish()
 	end
 end
 

@@ -12,7 +12,7 @@ function Region(x, y, w, h)
     local _w = w
     local _h = h
 
-    local _exists = function(PS)
+    local _exists = function(PS, threshold)
         -- for k,v in ipairs(PS) do
         --     print(k,v)
         -- end
@@ -24,13 +24,15 @@ function Region(x, y, w, h)
 
         snapshot()
 
-        local threshold = 0.85
+        if threshold == nil then
+            threshold = 0.85
+        end
         local img = cv.imread("sh.png", 0)
         local tmpl = cv.imread(PS, 0)
 
         local x,y = _scale(_x,_y)
         local w,h = _scale(_w,_h)
-        print("_has " .. PS,x,y,w,h,'/',img.cols,img.rows)
+        -- print("_has " .. PS,x,y,w,h,'/',img.cols,img.rows)
         local sub = cv.Mat.new(img, cv.Rect(x,y,w,h))
 
         -- Note following are equivalent in lua: 
@@ -44,12 +46,13 @@ function Region(x, y, w, h)
         -- TODO: maxx is a mistype of maxrow, fix that in library
         local maxy = res:maxx()
         local maxx = res:maxy()
-        print(PS, maxval, maxx, maxy)
+        -- print(PS, maxval, maxx, maxy)
         if maxval >= threshold then
             -- TODO: more accurate region than 10x10
+            print(PS .. ' found')
             return Match(maxx,maxy, 10, 10)
         end
-        print(PS .. ' not found')
+        -- print(PS .. ' not found')
         
         -- manually free matrix's memory
         img:release()
@@ -74,17 +77,21 @@ function Region(x, y, w, h)
         setH = function(self) _h= h end,
         
         exists = function(self, PS)
-            return _exists(PS)
+            return _exists(PS, nil)
+        end,
+        
+        exists_similarity = function(self, PS, similarity)
+            return _exists(PS, similarity)
         end,
 
         has = function(self, PS)
-            return _exists(PS) ~= nil
+            return _exists(PS, nil) ~= nil
         end,
 
         findAll = function(self, PS)
             -- TODO: currently only return one match
             local a = {}
-            table.insert(a, _exists(PS))
+            table.insert(a, _exists(PS, nil))
             return a
         end,
 

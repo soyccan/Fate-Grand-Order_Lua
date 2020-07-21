@@ -196,7 +196,7 @@ canClickNpCards = function()
 
     -- TODO
     -- click np card when stage >= 2
-    return _battle.getCurrentStage() >= 1 or _battle.hasChosenTarget()
+    return _battle.getCurrentStage() >= 2 --or _battle.hasChosenTarget()
 	-- return (weCanSpam or weAreInDanger) and _autoskill.IsFinished()
 end
 

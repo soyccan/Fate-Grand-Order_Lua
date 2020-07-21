@@ -1,6 +1,7 @@
 -- constants
-local dir = scriptPath()
-setImagePath(dir .. "image_JP")
+-- local dir = scriptPath()
+local dir = '/home/soyccan/Documents/Fate-Grand-Order_Lua/'
+-- setImagePath(dir .. "image_TW")
 package.path = package.path .. ";" .. dir .. 'modules/?.lua'
 
 local IMAGE_WIDTH = 1280

@@ -149,7 +149,7 @@ didStageChange = function()
 	-- This will compare last screenshot with current screen, effectively get to know if stage changed or not.
 	
 	local currentStagePattern = Pattern(GeneralImagePath .. "_GeneratedStageCounterSnapshot" .. ".png"):similar(0.8)
-	return not _game.BATTLE_STAGE_COUNT_REGION:exists(currentStagePattern)
+	return not _game.BATTLE_STAGE_COUNT_REGION:exists_similarity(currentStagePattern, 0.8)
 end
 
 takeStageSnapshot = function()
@@ -172,12 +172,17 @@ autoChooseTarget = function()
 	-- where (Servant 3) is the most powerful one. see docs/media/boss_stage.png
 	-- that's why the table is iterated backwards.
 
-	for i, target in _luaUtils.Reverse(_game.BATTLE_TARGET_REGION_ARRAY) do
-		if isPriorityTarget(target) then
-			chooseTarget(i)			
-			return
-		end
-	end
+    -- TODO for Gilbox Garden only
+    print('autoChooseTarget 1')
+    chooseTarget(1)
+    return
+
+	-- for i, target in _luaUtils.Reverse(_game.BATTLE_TARGET_REGION_ARRAY) do
+	--     if isPriorityTarget(target) then
+	--         chooseTarget(i)
+	--         return
+	--     end
+	-- end
 end
 
 isPriorityTarget = function(target)

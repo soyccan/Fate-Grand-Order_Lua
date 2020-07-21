@@ -45,7 +45,7 @@ Autoskill_List =
 }
 
 --Card Priority Customization
-Battle_CardPriority = "BAQ"
+Battle_CardPriority = "AQB"
 --AutoChooseTarget
 Battle_AutoChooseTarget = 1
 --NoblePhantasm Casting
