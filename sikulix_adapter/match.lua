@@ -13,7 +13,7 @@ function Match(x, y, w, h)
     return base
 end
 
--- package.cpath = package.cpath .. ';./luaOpenCV/build/libcv.so'
+-- package.cpath = package.cpath .. ';./libcv.so'
 -- local cv2 = require("cv")
 --
 -- local

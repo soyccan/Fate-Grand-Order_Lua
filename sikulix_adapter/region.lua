@@ -1,6 +1,6 @@
 require "common"
 
-package.cpath = package.cpath .. ';/home.orig/soyccan/luaOpenCV/build/libcv.so'
+package.cpath = package.cpath .. ';./libcv.so'
 local cv = require("cv")
 
 

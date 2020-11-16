@@ -9,7 +9,8 @@ local _battle
 -- see docs/media/card_formula.jpg
 -- a translation of it would be appreciated (lol)
 local CARD_AFFINITY = {
-	WEAK   = 2.0,
+	-- WEAK   = 2.0, -- TODO: temporarily set to 1.0; change it back soon
+    WEAK   = 1.0,
 	NORMAL = 1.0,
 	RESIST = 0.5
 }

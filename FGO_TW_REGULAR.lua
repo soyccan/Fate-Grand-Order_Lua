@@ -27,7 +27,7 @@ end
 --自動補體
 Refill_Enabled = 1
 Refill_Resource = "All Apples"
-Refill_Repetitions = 0
+Refill_Repetitions = 1
 
 --自動選擇好友從者
 -- first,manual/friend/preferred
@@ -76,64 +76,32 @@ Autoskill_List =
         Support_PreferredCEs = "",
 	},
     {
-        Name = "Gilbox Garden",
-        Skill_Command = "0,#,efl2a2g2,#,bhi2j,0,ek2",
-		Support_SelectionMode = "preferred",
-        Support_PreferredServants = "cba1.png",
-        Support_PreferredCEs = "",
-    },
-    {
-        Name = "Gilbox 1",
-        Skill_Command = "g1i4,#,hefx31g2,#,h",
-		Support_SelectionMode = "preferred",
-        Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png",
-        Support_PreferredCEs = "",
-    },
-    {
         Name = "Random",
         Skill_Command = "",
 		Support_SelectionMode = "first",
 		Support_PreferredServants = "",
         Support_PreferredCEs = "",
     },
-    {
-        Name = "Swim Event Honolulu Airport",
-        Skill_Command = "c,#,0,def,#,0,ghi",
-		Support_SelectionMode = "preferred",
-		Support_PreferredServants = "swimsaber1.png, nito.png",
-        Support_PreferredCEs = "",
-    },
-    {
-        Name = "Swim Event koko",
-        Skill_Command = "0,#,abcdf,#,jk2",
-		Support_SelectionMode = "first",
-		Support_PreferredServants = "laiguang.png, gil.png",
-        Support_PreferredCEs = "",
-    },
-    {
-        Name = "Foreigner",
-        Skill_Command = "acd1,#,e,#,ac",
-		Support_SelectionMode = "first",
-		Support_PreferredServants = "",
-        Support_PreferredCEs = "",
-    },
 
 	{
-		Name = "Dust",
-		Skill_Command = "cdg5,#,e5,#,abi1k14",
-		Support_SelectionMode = "preferred",
-		Support_PreferredServants = "merlin1.png, merlin23.png, merlin4.png, merlin_c.png"
+		Name = "Gu",
+		Skill_Command = "dfc4,#,aek2,#,g1hi1",
+		Support_SelectionMode = "first",
+        Support_PreferredServants = "",
+        Support_PreferredCEs = "",
 	},
 	{
-		Name = "Gear",
-		Skill_Command = "6,#,h6,#,bx31fed1gj46",
-		Support_SelectionMode = "preferred"
-	}
+		Name = "Chin",
+		Skill_Command = "c4,#,t3a,#,x11bcd1ef1g1h,i1j",
+		Support_SelectionMode = "preferred",
+        Support_PreferredServants = "cba1.png",
+        Support_PreferredCEs = "",
+	},
 }
 
 -- apply autoskill list
 -- note index starts from 1
-local ch = 1
+local ch = 4
 Skill_Command = Autoskill_List[ch].Skill_Command
 Support_SelectionMode = Autoskill_List[ch].Support_SelectionMode
 Support_PreferredServants = Autoskill_List[ch].Support_PreferredServants
@@ -144,7 +112,7 @@ print("Using " .. Autoskill_List[ch].Name)
 --自訂卡片選擇優先順序
 Battle_CardPriority = "BAQ"
 --自動選擇目標
-Battle_AutoChooseTarget = 1
+Battle_AutoChooseTarget = 0
 --自動寶具施放
 Battle_NoblePhantasm = "spam"
 --快速跳過死亡動畫

@@ -172,11 +172,6 @@ autoChooseTarget = function()
 	-- where (Servant 3) is the most powerful one. see docs/media/boss_stage.png
 	-- that's why the table is iterated backwards.
 
-    -- TODO for Gilbox Garden only
-    print('autoChooseTarget 1')
-    chooseTarget(1)
-    return
-
 	-- for i, target in _luaUtils.Reverse(_game.BATTLE_TARGET_REGION_ARRAY) do
 	--     if isPriorityTarget(target) then
 	--         chooseTarget(i)
