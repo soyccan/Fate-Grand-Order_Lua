@@ -1,6 +1,8 @@
 # Fate-Grand-Order_Lua
 This is a modified version to use adb instead of Ankula
 
+Lua Version: 5.3.3
+
 ## Tutorial
 On host (where Android emulator runs):
 1. Start a Nox emulator
