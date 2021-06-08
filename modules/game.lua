@@ -66,6 +66,19 @@ local SUPPORT_SWIPE_END_CLICK_LIST = {
 -- this depends on GameRegion
 game.SUPPORT_SWIPE_END_CLICK = SUPPORT_SWIPE_END_CLICK_LIST[GameRegion]
 
+game.PARTY_SELECTION_ARRAY = {
+	Location(1055,100),
+	Location(1105,100),
+	Location(1155,100),
+	Location(1205,100),
+	Location(1255,100),
+	Location(1305,100),
+	Location(1355,100),
+	Location(1405,100),
+	Location(1455,100),
+	Location(1505,100)
+}
+
 game.BATTLE_SCREEN_REGION = Region(2105,1259,336,116) -- see docs/media/battle_region.png
 
 local STAGE_COUNT_REGION_LIST = {
@@ -77,7 +90,7 @@ local STAGE_COUNT_REGION_LIST = {
 
 -- this depends on GameRegion
 game.BATTLE_STAGE_COUNT_REGION = STAGE_COUNT_REGION_LIST[GameRegion]
-game.BATTLE_EXTRAINFO_WINDOW_CLOSE_CLICK = Location(2550,0)
+game.BATTLE_EXTRAINFO_WINDOW_CLOSE_CLICK = Location(2550,10)
 game.BATTLE_ATTACK_CLICK = Location(2300,1200)
 game.BATTLE_SKIP_DEATH_ANIMATION_CLICK = Location(1700, 100) -- see docs/media/skip_death_animation_click.png
 
@@ -160,7 +173,7 @@ game.BATTLE_SERVANT_FACE_REGION_ARRAY = {
 	Region(1130,800,300,200),
 	Region(1644,800,300,200),
 	Region(2160,800,300,200),
-	
+
 	Region(678 ,190,300,200),
 	Region(1138,190,300,200),
 	Region(1606,190,300,200)

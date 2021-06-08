@@ -93,9 +93,29 @@ local function Withdraw()
 	end
 end
 
---Click begin quest in Formation selection, then select boost item, if applicable, then confirm selection.
+--[[
+	Starts the quest after the support has already been selected. The following features are done optionally:
+	1. The configured party is selected if Party_Number is set
+	2. A boost item is selected if BoostItem_SelectionMode is set (needed in some events)
+	3. The story is skipped if StorySkip is activated
+]]
 local function StartQuest()
     print("Start quest")
+	if Party_Number ~= nil then
+		if game.PARTY_SELECTION_ARRAY[Party_Number] ~= nil then
+			--Start Quest Button becomes unresponsive if the same party is clicked. So we switch to one party and then to the user-specified one.
+			if Party_Number == 1 then
+				click(game.PARTY_SELECTION_ARRAY[2])
+			else
+				click(game.PARTY_SELECTION_ARRAY[1])
+			end
+			wait(1)
+			click(game.PARTY_SELECTION_ARRAY[Party_Number])
+			wait(1.2)
+		else
+			scriptExit("Invalid party number selected: \"" .. Party_Number .. "\".")
+		end
+	end
 	click(game.MENU_START_QUEST_CLICK)
 
 	if game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode] ~= nil then
@@ -105,7 +125,7 @@ local function StartQuest()
 	else
 		scriptExit("Invalid boost item selection mode: \"" + BoostItem_SelectionMode + "\".")
 	end
-	
+
 	if StorySkip == 1 then
 		wait(10)
 		if game.MENU_STORY_SKIP_REGION:exists(GeneralImagePath .. "storyskip.png") then
@@ -125,8 +145,11 @@ end
 local function Menu()
 	battle.resetState()
 	turnCounter = {0, 0, 0, 0, 0}
-	-- Prints a message containing the amount of apple used
-	toast(StoneUsed .. " refills used out of " .. Refill_Repetitions)
+
+	if Refill_Repetitions > 0 then
+		-- Prints a message containing the amount of apple used
+		toast(StoneUsed .. " refills used out of " .. Refill_Repetitions)
+	end
 
 	--Click uppermost quest.
 	click(game.MENU_SELECT_QUEST_CLICK)
@@ -153,11 +176,11 @@ local function Result()
 
 	--Checking if there was a Bond CE reward
 	if game.RESULT_CE_REWARD_REGION:exists(GeneralImagePath .. "ce_reward.png") ~= nil then
-		
+
 		if StopAfterBond10 == 1 then
 			scriptExit("Bond 10 CE GET!")
 		end
-		
+
 		click(game.RESULT_CE_REWARD_CLOSE_CLICK)
 		continueClick(game.RESULT_NEXT_CLICK,20) --Still need to proceed through reward screen.
 	end
@@ -171,17 +194,17 @@ local function Result()
 
 	wait(1)
 
-	--Only for JP currently. Searches for the Continue option after select Free Quests
-	if GameRegion == "JP" and game.CONTINUE_REGION:exists(GeneralImagePath .. "confirm.png") then
+	--Only for JP, EN and CN currently. Searches for the Continue option after select Free Quests
+	if (GameRegion == "JP" or GameRegion == "EN" or GameRegion == "CN" or GameRegien == "TW") and game.CONTINUE_REGION:exists(GeneralImagePath .. "confirm.png") then
 		IsContinuing = 1 -- Needed to show we don't need to enter the "StartQuest" function
-	
+
 		-- Pressing Continue option after completing a quest, reseting the state as would occur in "Menu" function
 		click(game.CONTINUE_CLICK)
 		battle.resetState()
 		turnCounter = {0, 0, 0, 0, 0}
 
 		wait(1.5)
-	
+
 		--If Stamina is empty, follow same protocol as is in "Menu" function
 		--Auto refill.
 		while game.STAMINA_SCREEN_REGION:exists(GeneralImagePath .. "stamina.png") do
@@ -249,8 +272,6 @@ local function Init()
 	autoskill.Init(battle, card)
 	battle.init(autoskill, card)
 	card.init(autoskill, battle)
-
-	toast("Will only select servant/danger enemy as noble phantasm target, unless specified using Skill Command. Please check github for further detail.")
 end
 
 --[[
