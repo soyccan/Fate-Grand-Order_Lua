@@ -2,6 +2,8 @@
 --***************************************************************************
 require("global")
 
+os.execute('adb connect 192.168.12.1:52025')
+
 -- dir = scriptPath()
 -- dir = 'C:/Users/soyccan/Documents/Fate-Grand-Order_Lua/'
 dir = '/home/soyccan/Documents/Fate-Grand-Order_Lua/'
@@ -27,7 +29,7 @@ end
 --自動補體
 Refill_Enabled = 1
 Refill_Resource = "All Apples"
-Refill_Repetitions = 1
+Refill_Repetitions = 2
 
 --自動選擇好友從者
 -- first,manual/friend/preferred
@@ -50,7 +52,7 @@ StopAfterBond10 = 0--[[
 BoostItem_SelectionMode = "disabled" --[[
 	possible values: disabled, 1, 2 or 3
 	if you want to use this, make sure "Confirm Use of Boost Item" is off
-	
+
 	TODO: move this explanation to the documentation
 --]]
 
@@ -70,9 +72,9 @@ Autoskill_List =
 {
 	{
 		Name = "Daily Routine",
-		Skill_Command = "c4,#,ag2hi,#,b",
-		Support_SelectionMode = "preferred",
-        Support_PreferredServants = "waver4.png, waver3.png, waver2.png, waver1.png",
+		Skill_Command = "c4,#,aefg2i2,#,bh",
+		Support_SelectionMode = "first",
+        Support_PreferredServants = "cba1.png, waver4.png, waver3.png, waver2.png, waver1.png",
         Support_PreferredCEs = "",
 	},
     {
@@ -82,26 +84,18 @@ Autoskill_List =
 		Support_PreferredServants = "",
         Support_PreferredCEs = "",
     },
-
-	{
-		Name = "Gu",
-		Skill_Command = "dfc4,#,aek2,#,g1hi1",
+    {
+        Name = "20210423",
+		Skill_Command = "c4,#,aeg2i2,#,cbhk1",
 		Support_SelectionMode = "first",
-        Support_PreferredServants = "",
+		Support_PreferredServants = "",
         Support_PreferredCEs = "",
-	},
-	{
-		Name = "Chin",
-		Skill_Command = "c4,#,t3a,#,x11bcd1ef1g1h,i1j",
-		Support_SelectionMode = "preferred",
-        Support_PreferredServants = "cba1.png",
-        Support_PreferredCEs = "",
-	},
+    }
 }
 
 -- apply autoskill list
 -- note index starts from 1
-local ch = 4
+local ch = 1
 Skill_Command = Autoskill_List[ch].Skill_Command
 Support_SelectionMode = Autoskill_List[ch].Support_SelectionMode
 Support_PreferredServants = Autoskill_List[ch].Support_PreferredServants
