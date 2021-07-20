@@ -2,11 +2,12 @@
 --***************************************************************************
 require("global")
 
-os.execute('adb connect 192.168.12.1:52025')
+os.execute('timeout 10 adb connect 127.0.0.1:62001')
 
--- dir = scriptPath()
--- dir = 'C:/Users/soyccan/Documents/Fate-Grand-Order_Lua/'
-dir = '/home/soyccan/Documents/Fate-Grand-Order_Lua/'
+local handle = io.popen('pwd')
+dir = handle:read("*a"):gsub('\n', '/')
+handle:close()
+
 setImagePath(dir)
 GameRegion = "TW" --StageCountRegion issue comment https://github.com/29988122/Fate-Grand-Order_Lua/issues/39#issuecomment-390208639
 StageCountRegion = Region(1710,25,55,60)
@@ -29,7 +30,7 @@ end
 --自動補體
 Refill_Enabled = 1
 Refill_Resource = "All Apples"
-Refill_Repetitions = 2
+Refill_Repetitions = 20
 
 --自動選擇好友從者
 -- first,manual/friend/preferred
@@ -72,7 +73,7 @@ Autoskill_List =
 {
 	{
 		Name = "Daily Routine",
-		Skill_Command = "c4,#,aefg2i2,#,bh",
+		Skill_Command = "c4,#,aceg2hi2,#,bk1",
 		Support_SelectionMode = "first",
         Support_PreferredServants = "cba1.png, waver4.png, waver3.png, waver2.png, waver1.png",
         Support_PreferredCEs = "",

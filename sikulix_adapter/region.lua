@@ -35,10 +35,10 @@ function Region(x, y, w, h)
         -- print("_has " .. PS,x,y,w,h,'/',img.cols,img.rows)
         local sub = cv.Mat.new(img, cv.Rect(x,y,w,h))
 
-        -- Note following are equivalent in lua: 
+        -- Note following are equivalent in lua:
         -- obj.method(obj, arg) and obj:method(arg)
         -- TODO: UMat faster?
-        local res = cv.Mat.zeros(sub.rows - tmpl.rows + 1, 
+        local res = cv.Mat.zeros(sub.rows - tmpl.rows + 1,
                                  sub.cols - tmpl.cols + 1, sub:type())
         cv.matchTemplate(sub, tmpl, res, cv.TM_CCOEFF_NORMED)
 
@@ -53,7 +53,7 @@ function Region(x, y, w, h)
             return Match(maxx,maxy, 10, 10)
         end
         -- print(PS .. ' not found')
-        
+
         -- manually free matrix's memory
         img:release()
         tmpl:release()
@@ -75,11 +75,11 @@ function Region(x, y, w, h)
         setY = function(self) _y = y end,
         setW = function(self) _w = w end,
         setH = function(self) _h= h end,
-        
+
         exists = function(self, PS)
             return _exists(PS, nil)
         end,
-        
+
         exists_similarity = function(self, PS, similarity)
             return _exists(PS, similarity)
         end,

@@ -43,7 +43,7 @@ function clickNoScale(PSMRL)
     -- TODO: find all that need to use clickNoScale instead of click()
     assert(PSMRL.type == "Match" or PSMRL.type == 'Location')
 
-    local cmdTap = string.format('adb shell input tap %d %d',
+    local cmdTap = string.format('timeout 10 adb shell input tap %d %d',
         PSMRL.getX(),
         PSMRL.getY())
     print('> ' .. cmdTap)
@@ -57,7 +57,7 @@ function click(PSMRL)
     x,y = _scale(
         PSMRL.getX(),
         PSMRL.getY())
-    local cmdTap = string.format('adb shell input tap %d %d',
+    local cmdTap = string.format('timeout 10 adb shell input tap %d %d',
     x,y
     )
     print('> ' .. cmdTap)
@@ -87,7 +87,7 @@ end
 
 function manualTouch(actionTable)
     -- argument example:
-    -- actionList = { 
+    -- actionList = {
     -- {action = "touchDown", target = p1},
     -- {action = "wait", target = 0.2},
     -- {action = "touchMove", target = p2},
@@ -110,7 +110,7 @@ function manualTouch(actionTable)
     x2,y2 = _scale(x2,y2)
 
     local cmd= string.format(
-        'adb shell input swipe %d %d %d %d %d',
+        'timeout 10 adb shell input swipe %d %d %d %d %d',
         x1, y1, x2,y2,__inswait
     )
     print('cmd: ' .. cmd)
@@ -122,7 +122,7 @@ end
 --
 local function swipe(org, tar, delay)
     cmdSwipe = string.format(
-        'adb shell input swipe %d %d %d %d %d',
+        'timeout 10 adb shell input swipe %d %d %d %d %d',
         org[0],
         org[1],
         tar[0],

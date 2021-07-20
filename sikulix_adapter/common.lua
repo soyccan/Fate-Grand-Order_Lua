@@ -2,8 +2,8 @@ local useprev = false
 
 function snapshot()
     if not useprev then
-        os.execute('adb shell screencap -p /sdcard/sh.png')
-        os.execute('adb pull /sdcard/sh.png .')
+        os.execute('timeout 10 adb shell screencap -p /sdcard/sh.png')
+        os.execute('timeout 10 adb pull /sdcard/sh.png .')
         useprev = true
     end
 end

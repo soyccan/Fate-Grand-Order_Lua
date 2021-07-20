@@ -101,39 +101,42 @@ end
 ]]
 local function StartQuest()
     print("Start quest")
-	if Party_Number ~= nil then
-		if game.PARTY_SELECTION_ARRAY[Party_Number] ~= nil then
-			--Start Quest Button becomes unresponsive if the same party is clicked. So we switch to one party and then to the user-specified one.
-			if Party_Number == 1 then
-				click(game.PARTY_SELECTION_ARRAY[2])
-			else
-				click(game.PARTY_SELECTION_ARRAY[1])
-			end
-			wait(1)
-			click(game.PARTY_SELECTION_ARRAY[Party_Number])
-			wait(1.2)
-		else
-			scriptExit("Invalid party number selected: \"" .. Party_Number .. "\".")
-		end
-	end
-	click(game.MENU_START_QUEST_CLICK)
+	-- if Party_Number ~= nil then
+    --     print('Select party')
+	--     if game.PARTY_SELECTION_ARRAY[Party_Number] ~= nil then
+	--         --Start Quest Button becomes unresponsive if the same party is clicked. So we switch to one party and then to the user-specified one.
+	--         if Party_Number == 1 then
+	--             click(game.PARTY_SELECTION_ARRAY[2])
+	--         else
+	--             click(game.PARTY_SELECTION_ARRAY[1])
+	--         end
+	--         wait(1)
+	--         click(game.PARTY_SELECTION_ARRAY[Party_Number])
+	--         wait(1.2)
+	--     else
+	--         scriptExit("Invalid party number selected: \"" .. Party_Number .. "\".")
+	--     end
+	-- end
+    click(game.MENU_START_QUEST_CLICK)
+    --
+	-- if game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode] ~= nil then
+    --     print('Select boost item')
+	--     wait(2)
+	--     click(game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode])
+	--     click(game.MENU_BOOST_ITEM_SKIP_CLICK) -- in case you run out of items
+	-- else
+	--     scriptExit("Invalid boost item selection mode: \"" + BoostItem_SelectionMode + "\".")
+	-- end
 
-	if game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode] ~= nil then
-		wait(2)
-		click(game.MENU_BOOST_ITEM_CLICK_ARRAY[BoostItem_SelectionMode])
-		click(game.MENU_BOOST_ITEM_SKIP_CLICK) -- in case you run out of items
-	else
-		scriptExit("Invalid boost item selection mode: \"" + BoostItem_SelectionMode + "\".")
-	end
-
-	if StorySkip == 1 then
-		wait(10)
-		if game.MENU_STORY_SKIP_REGION:exists(GeneralImagePath .. "storyskip.png") then
-			click(game.MENU_STORY_SKIP_CLICK)
-			wait(0.5)
-			click(game.MENU_STORY_SKIP_YES_CLICK)
-		end
-	end
+	-- if StorySkip == 1 then
+    --     print('Skip story')
+	--     wait(10)
+	--     if game.MENU_STORY_SKIP_REGION:exists(GeneralImagePath .. "storyskip.png") then
+	--         click(game.MENU_STORY_SKIP_CLICK)
+	--         wait(0.5)
+	--         click(game.MENU_STORY_SKIP_YES_CLICK)
+	--     end
+	-- end
 end
 
 --Checking if in menu.png is on screen, indicating you are in the screen to choose your quest
@@ -154,14 +157,6 @@ local function Menu()
 	--Click uppermost quest.
 	click(game.MENU_SELECT_QUEST_CLICK)
 	wait(1.5)
-
-	--Auto refill.
-	while game.STAMINA_SCREEN_REGION:exists(GeneralImagePath .. "stamina.png") do
-		RefillStamina()
-
-        usePreviousSnap(false)
-        snapshot()
-	end
 end
 
 --Checking if Quest Completed screen is up, specifically if Bond point/reward is up.
@@ -195,7 +190,9 @@ local function Result()
 	wait(1)
 
 	--Only for JP, EN and CN currently. Searches for the Continue option after select Free Quests
-	if (GameRegion == "JP" or GameRegion == "EN" or GameRegion == "CN" or GameRegien == "TW") and game.CONTINUE_REGION:exists(GeneralImagePath .. "confirm.png") then
+	if (GameRegion == "JP" or GameRegion == "EN" or GameRegion == "CN" or GameRegion == "TW") and game.CONTINUE_REGION:exists(GeneralImagePath .. "confirm.png") then
+        print('Continuing')
+
 		IsContinuing = 1 -- Needed to show we don't need to enter the "StartQuest" function
 
 		-- Pressing Continue option after completing a quest, reseting the state as would occur in "Menu" function
@@ -205,11 +202,6 @@ local function Result()
 
 		wait(1.5)
 
-		--If Stamina is empty, follow same protocol as is in "Menu" function
-		--Auto refill.
-		while game.STAMINA_SCREEN_REGION:exists(GeneralImagePath .. "stamina.png") do
-			RefillStamina()
-		end
 		return
 	end
 
@@ -261,6 +253,10 @@ local function Support()
 	end
 end
 
+local function NeedRefill()
+    return game.STAMINA_SCREEN_REGION:exists(GeneralImagePath .. "stamina.png")
+end
+
 --[[
 	Initialize Aspect Ratio adjustment for different sized screens,ask for input from user for Autoskill plus confirming Apple/Stone usage
 	Then initialize the Autoskill, Battle, and Card modules in modules/.
@@ -284,12 +280,13 @@ end
 	Code for Support is on line 208 of this Script
 ]]--
 local SCREENS = {
-	{ Validator = game.NeedsToRetry,  Actor = game.Retry },
-	{ Validator = battle.isIdle, Actor = battle.performBattle },
-	{ Validator = IsInMenu,      Actor = Menu },
-	{ Validator = IsInResult,    Actor = Result },
-	{ Validator = IsInSupport,   Actor = Support },
-	{ Validator = NeedsToWithdraw, Actor = Withdraw}
+	{ Validator = game.NeedsToRetry, Actor = game.Retry },
+	{ Validator = battle.isIdle,     Actor = battle.performBattle },
+	{ Validator = NeedRefill,        Actor = RefillStamina },
+	{ Validator = IsInMenu,          Actor = Menu },
+	{ Validator = IsInResult,        Actor = Result },
+	{ Validator = IsInSupport,       Actor = Support },
+	{ Validator = NeedsToWithdraw,   Actor = Withdraw }
 }
 
 Init()
@@ -321,6 +318,11 @@ while(true) do
     if fail > 20 then
         click(game.NEXT_STEP)
         click(game.NOTHING)
+        click(game.STAMINA_CLOSE_CLICK)
+        click(game.BATTLE_EXTRAINFO_WINDOW_CLOSE_CLICK)
+        click(game.RESULT_CE_REWARD_CLOSE_CLICK)
+        click(game.RESULT_FRIEND_REQUEST_REJECT_CLICK)
+        click(game.RESULT_NEXT_CLICK)
     end
 
 	wait(0.5)
